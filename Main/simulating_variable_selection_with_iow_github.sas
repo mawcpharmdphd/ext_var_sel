@@ -46,7 +46,7 @@ RUN;
 ods graphics off;
 ods exclude all;
 ods noresults;
-/*
+
 PROC GENMOD DATA=fulldata DESCENDING;
 	BY replicate;
 	MODEL intrial = Z6 / link=identity dist=binomial;
@@ -112,12 +112,12 @@ PROC GENMOD DATA=predvals11 DESCENDING;
 	BY replicate;
 	MODEL intrial = Z5 / link=identity dist=binomial;
 	OUTPUT OUT=predvals12 pred=predZ5;
-RUN;*/
+RUN;
 
 
 DATA makeweights;
 	SET fulldata;
-	WHERE intrial=1;/*
+	WHERE intrial=1;
 	IOSWZ1=1/(predZ1/(1-predZ1));
 	IOSWZ2=1/(predZ2/(1-predZ2));
 	IOSWZ3=1/(predZ3/(1-predZ3));
@@ -128,7 +128,7 @@ DATA makeweights;
 	IOSWZ2Z6=1/(predZ2Z6/(1-predZ2Z6));
 	IOSWZ3Z6=1/(predZ3Z6/(1-predZ3Z6));
 	IOSWZ4Z6=1/(predZ4Z6/(1-predZ4Z6));
-	IOSWZ5Z6=1/(predZ5Z6/(1-predZ5Z6));*/
+	IOSWZ5Z6=1/(predZ5Z6/(1-predZ5Z6));
 RUN;
 
 PROC GENMOD DATA=makeweights DESCENDING;
@@ -136,7 +136,7 @@ PROC GENMOD DATA=makeweights DESCENDING;
 	MODEL Y=X / link=identity dist=binomial;
 	ODS OUTPUT parameterestimates=crude;
 RUN;
-/*
+
 PROC GENMOD DATA=makeweights DESCENDING;
 	BY replicate;
 	MODEL Y=X / link=identity dist=binomial;
@@ -212,12 +212,12 @@ PROC GENMOD DATA=makeweights DESCENDING;
 	MODEL Y=X / link=identity dist=binomial;
 	WEIGHT IOSWZ5Z6;
 	ODS OUTPUT parameterestimates=ioswZ5Z6;
-RUN;*/
+RUN;
 
 PROC DATASETS library = results nolist;
 	append base=results.crude data=work.crude;
 QUIT;
-/*
+
 PROC DATASETS library = results nolist;
 	append base=results.ioswZ1 data=work.ioswZ1;
 QUIT;
@@ -261,7 +261,7 @@ QUIT;
 PROC DATASETS library = results nolist;
 	append base=results.ioswZ5Z6 data=work.ioswZ5Z6;
 QUIT;
-*/
+
 %END;
 
 ods graphics on;
@@ -273,4 +273,4 @@ ods results;
 OPTIONS NONOTES NOSOURCE;
 
 
-%simulate(repstart=11,repend=20000,seed=12233);
+%simulate(repstart=1,repend=20000,seed=12233);
