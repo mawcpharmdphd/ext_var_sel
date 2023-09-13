@@ -76,7 +76,7 @@ PROC GENMOD DATA=fulldataX DESCENDING;
 	MODEL Y= / link=identity dist=binomial;
 	OUTPUT OUT=predvals pred=predcrude;
 RUN;
-/*
+
 PROC GENMOD DATA=fulldataX DESCENDING;
 	BY replicate X;
 	MODEL Y=Z6 / link=identity dist=binomial;
@@ -143,7 +143,7 @@ PROC GENMOD DATA=predvals11 DESCENDING;
 	MODEL Y=Z5 / link=identity dist=binomial;
 	OUTPUT OUT=predvals12 pred=predZ5;
 RUN;
-*/
+
 DATA makeouts;
 	SET predvals;
 	WHERE intrial=0;
@@ -167,6 +167,19 @@ QUIT;
 %mend;
 
 %analyzeG(model=crude);
+
+%analyzeG(model=Z1);
+%analyzeG(model=Z2);
+%analyzeG(model=Z3);
+%analyzeG(model=Z4);
+%analyzeG(model=Z5);
+%analyzeG(model=Z6);
+%analyzeG(model=Z1Z6);
+%analyzeG(model=Z2Z6);
+%analyzeG(model=Z3Z6);
+%analyzeG(model=Z4Z6);
+%analyzeG(model=Z5Z6);
+
 %END;
 
 ods graphics on;
@@ -178,4 +191,4 @@ ods results;
 OPTIONS NONOTES NOSOURCE;
 
 
-%simulate(repstart=11,repend=20000,seed=12233);
+%simulate(repstart=1,repend=20000,seed=12233);
