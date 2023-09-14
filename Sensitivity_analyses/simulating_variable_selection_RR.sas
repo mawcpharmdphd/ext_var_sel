@@ -280,4 +280,4 @@ ods results;
 OPTIONS NONOTES NOSOURCE;
 
 
-%simulate(repstart=11,repend=20000,seed=19999999);
+%simulate(repstart=1,repend=20000,seed=19999999);
